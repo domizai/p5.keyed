@@ -1,3 +1,10 @@
 DS_Store
 private/
 node_modules/
+.vscode/
+
+# Ignore Python and uv files
+.venv/
+.python-version
+pyproject.toml
+uv.lock

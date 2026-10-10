@@ -5,3 +5,4 @@ node_modules/
 
 # Ignore Python and uv files
 .venv/
+__pycache__/

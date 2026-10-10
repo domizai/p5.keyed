@@ -5,6 +5,3 @@ node_modules/
 
 # Ignore Python and uv files
 .venv/
-.python-version
-pyproject.toml
-uv.lock

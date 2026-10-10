@@ -45,6 +45,34 @@ hsb = new Keyed((a, b, d) => a.lerp(b, d, 'hsb'), hsbBlack)
     --8<-- "08_Types/Lerps/sketch.js"
     ```
 
+### Plain objects
+
+<div class="sketch" data-sketch="08_Types/PlainObjects"></div>
+
+A lerp function is all it takes to animate your own data. This one blends plain objects with `x` and `y`, so no class is needed, and the default value is optional:
+
+```js
+const pointLerp = (a, b, d) => ({
+    x: (1 - d) * a.x + d * b.x,
+    y: (1 - d) * a.y + d * b.y,
+});
+
+point = new Keyed(pointLerp)
+    .key(4, { x: 340, y: 100 })
+    .key(1, { x: 60, y: 300 });
+
+point.value(2.5); // { x: 200, y: 200 }
+```
+
+Keys can be added in any order. Without a default value, `value()` is `undefined` until the first key. Keys are copied through the lerp, so changing your original objects later doesn't change them.
+
+This sketch has no animation: it draws `value(t)` at a few fixed times, a row of dots between the two keys (red).
+
+??? example "Full sketch: PlainObjects"
+    ```js
+    --8<-- "08_Types/PlainObjects/sketch.js"
+    ```
+
 ## Your own types
 
 <div class="sketch" data-sketch="08_Types/CustomType"></div>

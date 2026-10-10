@@ -300,3 +300,34 @@ describe('init', () => {
         expect(() => Keyed.init()).not.toThrow();
     });
 });
+
+describe('a Keyed without a default value', () => {
+    const lerp2 = (a: { x: number; y: number }, b: { x: number; y: number }, d: number) => ({
+        x: (1 - d) * a.x + d * b.x,
+        y: (1 - d) * a.y + d * b.y,
+    });
+
+    it('blends plain objects with a lerp function, keys in any order', () => {
+        const o = new Keyed(lerp2).key(400, { x: 10, y: 20 }).key(100, { x: 30, y: 40 });
+        expect(o.value(100)).toEqual({ x: 30, y: 40 });
+        expect(o.value(250)).toEqual({ x: 20, y: 30 });
+        expect(o.value(400)).toEqual({ x: 10, y: 20 });
+        expect(o.value(0)).toEqual({ x: 30, y: 40 });
+    });
+
+    it('is undefined until the first key, and a key works alone', () => {
+        const o = new Keyed(lerp2);
+        expect(o.value(0)).toBeUndefined();
+        o.key(1, { x: 5, y: 6 });
+        expect(o.value(0)).toEqual({ x: 5, y: 6 });
+    });
+
+    it('still copies keys, so stored values cannot be changed through the result', () => {
+        const start = { x: 1, y: 1 };
+        const o = new Keyed(lerp2).key(0, start).key(1, { x: 2, y: 2 });
+        start.x = 99;
+        expect(o.value(0).x).toBe(1);
+        o.value(0).x = 77;
+        expect(o.value(0).x).toBe(1);
+    });
+});

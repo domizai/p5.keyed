@@ -36,8 +36,11 @@ export declare class Keyed<A> {
     static setFrameRate(fps: number): void;
     /** Used by Keyed values without their own timeline. */
     static defaultTimeline(): Timeline;
-    /** Blends keys with lerp, a function (a, b, d) => value or an object with lerp(a, b, d); defaultValue is used while there are no keys. */
-    constructor(lerp: Lerp<A>, defaultValue: A);
+    /**
+     * Blends keys with lerp, a function (a, b, d) => value or an object with lerp(a, b, d).
+     * defaultValue is used while there are no keys; without one, value() is undefined until the first key.
+     */
+    constructor(lerp: Lerp<A>, defaultValue?: A);
     /** Picks the type from the value: number, string, boolean, p5.Vector, p5.Color, or any object with lerp(b, d) that returns a new object. */
     static of(value: number): Keyed<number>;
     static of(value: string): Keyed<string>;

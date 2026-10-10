@@ -37,7 +37,7 @@ export class Keyed<A> {
     static #defaultTimeline = new Timeline();
 
     readonly #lerp: LerpFunction<A>;
-    readonly #defaultValue: A;
+    readonly #defaultValue: A | undefined;
     #keys: Array<KeyEntry<A>> = [];
     // null means defaultTimeline(), looked up on use so values created before init() still pick it up.
     #tm: Timeline | null = null;
@@ -110,10 +110,13 @@ export class Keyed<A> {
         return Keyed.#defaultTimeline;
     }
 
-    /** Blends keys with lerp, a function (a, b, d) => value or an object with lerp(a, b, d); defaultValue is used while there are no keys. */
-    constructor(lerp: Lerp<A>, defaultValue: A) {
+    /**
+     * Blends keys with lerp, a function (a, b, d) => value or an object with lerp(a, b, d).
+     * defaultValue is used while there are no keys; without one, value() is undefined until the first key.
+     */
+    constructor(lerp: Lerp<A>, defaultValue?: A) {
         this.#lerp = toLerpFunction(lerp);
-        this.#defaultValue = this.#copy(defaultValue);
+        this.#defaultValue = defaultValue === undefined ? undefined : this.#copy(defaultValue);
     }
 
     /** Picks the type from the value: number, string, boolean, p5.Vector, p5.Color, or any object with lerp(b, d) that returns a new object. */
@@ -336,7 +339,7 @@ export class Keyed<A> {
         const n = keys.length;
 
         if (n === 0) {
-            return this.#copy(this.#defaultValue);
+            return this.#defaultValue === undefined ? (undefined as A) : this.#copy(this.#defaultValue);
         }
 
         if (n === 1) {

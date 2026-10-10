@@ -19,7 +19,7 @@ See [Getting Started](tutorial/basics.md) and [Timelines](tutorial/timeline.md#f
 
 - **Built-in types:** `Keyed.ofFloat()`, `ofInt()`, `ofColor()`, `ofBoolean()`, `ofString()`, `ofVector()`, each optionally with a default value used while there are no keys.
 - **Shorthand:** `Keyed.of(value)` picks the type from a number, string, boolean, `p5.Vector`, `p5.Color` or any object with `lerp(b, d)`.
-- **Any type:** `new Keyed(lerp, defaultValue)`, where `lerp` is a function `(a, b, d) => value` or an object with `lerp(a, b, d)`.
+- **Any type:** `new Keyed(lerp, defaultValue)` (the default is optional; without one `value()` is `undefined` until the first key), where `lerp` is a function `(a, b, d) => value` or an object with `lerp(a, b, d)`.
 - **Keys:** `key(tOrPinOrKey, value)`, `removeKey(keyOrPin)`, `clearKeys()`, `keys()`.
 - **Reading:** `value()` is the value now; `value(t)` the value at any time.
 - **`echo(samples, delay)`** returns an array of the value at now, now - delay, now - 2 * delay, ...

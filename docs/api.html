@@ -1027,7 +1027,7 @@
 <ul>
 <li><strong>Built-in types:</strong> <code>Keyed.ofFloat()</code>, <code>ofInt()</code>, <code>ofColor()</code>, <code>ofBoolean()</code>, <code>ofString()</code>, <code>ofVector()</code>, each optionally with a default value used while there are no keys.</li>
 <li><strong>Shorthand:</strong> <code>Keyed.of(value)</code> picks the type from a number, string, boolean, <code>p5.Vector</code>, <code>p5.Color</code> or any object with <code>lerp(b, d)</code>.</li>
-<li><strong>Any type:</strong> <code>new Keyed(lerp, defaultValue)</code>, where <code>lerp</code> is a function <code>(a, b, d) =&gt; value</code> or an object with <code>lerp(a, b, d)</code>.</li>
+<li><strong>Any type:</strong> <code>new Keyed(lerp, defaultValue)</code> (the default is optional; without one <code>value()</code> is <code>undefined</code> until the first key), where <code>lerp</code> is a function <code>(a, b, d) =&gt; value</code> or an object with <code>lerp(a, b, d)</code>.</li>
 <li><strong>Keys:</strong> <code>key(tOrPinOrKey, value)</code>, <code>removeKey(keyOrPin)</code>, <code>clearKeys()</code>, <code>keys()</code>.</li>
 <li><strong>Reading:</strong> <code>value()</code> is the value now; <code>value(t)</code> the value at any time.</li>
 <li><strong><code>echo(samples, delay)</code></strong> returns an array of the value at now, now - delay, now - 2 * delay, ...</li>

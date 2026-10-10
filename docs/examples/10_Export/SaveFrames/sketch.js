@@ -64,6 +64,8 @@ function draw() {
     // is left out while recording.
     if (recording) return;
 
+    // text() is outlined by the current stroke in p5.
+    noStroke();
     fill(150);
     if (requested) {
         text('recording starts with the next loop', 20, 30);

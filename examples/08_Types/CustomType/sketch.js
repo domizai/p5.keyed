@@ -39,6 +39,8 @@ function draw() {
     circle(0, -20, 10);
     pop();
 
+    // text() is outlined by the current stroke in p5.
+    noStroke();
     fill(150);
     text('Keyed.of(new Transform(...))', 40, 380);
 }

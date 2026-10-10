@@ -37,6 +37,8 @@ function draw() {
     // No value() calls: bg and label are already up to date.
     background(bg);
 
+    // text() is outlined by the current stroke in p5.
+    noStroke();
     fill(0);
     textSize(32);
     text(label, width / 2, 180);

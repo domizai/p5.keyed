@@ -31,6 +31,8 @@ function draw() {
     const head = map(tm.t(), 0, tm.duration(), 40, 360);
     line(head, 150, head, 170);
 
+    // text() is outlined by the current stroke in p5.
+    noStroke();
     fill(0);
     text(`t         ${nf(tm.t(), 1, 2)}`, 40, 210);
     text(`playing   ${tm.isPlaying()}`, 40, 235);

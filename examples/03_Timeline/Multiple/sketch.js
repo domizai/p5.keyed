@@ -42,6 +42,8 @@ function draw() {
     arc(200, 70, 50, 50, a, a + PI * 1.5);
     strokeWeight(1);
 
+    // text() is outlined by the current stroke in p5.
+    noStroke();
     fill(150);
     text(`intro finished: ${intro.isFinished()}`, 200, 130);
 

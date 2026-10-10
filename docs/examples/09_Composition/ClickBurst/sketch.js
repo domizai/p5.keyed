@@ -47,6 +47,8 @@ function draw() {
         }
     }
 
+    // text() is outlined by the current stroke in p5.
+    noStroke();
     fill(150);
     text('click anywhere   bursts: ' + bursts.length, 40, 380);
 }

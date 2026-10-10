@@ -2,6 +2,7 @@ import type p5 from 'p5';
 import { Key } from './key';
 import { type Lerp } from './lerps';
 import type { Lerpable } from './lerpable';
+import { Path } from './paths';
 import type { Pin } from './pin';
 import { Timeline } from './timeline';
 import { TweenAt, type Tween } from './tween';
@@ -66,11 +67,13 @@ export declare class Keyed<A> {
     /**
      * Adds a key at time t, on a pin, or the key itself (adding the same Key again replaces its tween).
      * The value is a copy of what you pass; or a tween, a function of position 0..1, or a TweenAt to follow instead.
-     * Functions and TweenAt objects are always read as tweens, so a Keyed can't hold those as its own values.
+     * Functions, TweenAt and Path objects are always read as tweens, so a Keyed can't hold those as its own values.
      */
     key(at: Key | Pin | number, value: A): this;
     key(at: Key | Pin | number, tween: Tween<A>): this;
     key(at: Key | Pin | number, tweenAt: TweenAt<A>): this;
+    /** A path travels all of it from key to key; path.at(position) pins a key to one position on it. */
+    key(at: Key | Pin | number, path: A extends p5.Vector ? Path : never): this;
     /** The setter receives value() before every draw(), after the timelines have advanced; replaces any previous one. */
     bind(setter: (value: A) => void): this;
     /** Writes value() to target[property] before every draw(), e.g. keyed.bind(ball, 'count') for an integer. */

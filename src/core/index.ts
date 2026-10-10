@@ -16,9 +16,10 @@ export {
     type LerpObject,
 } from './lerps';
 export { Marker } from './marker';
+export { CubicBezier, Curve, Path, QuadraticBezier, Spline, type Point } from './paths';
 export { Pin } from './pin';
 export { settings } from './settings';
 export { Ticker, ticker, type Tickable } from './ticker';
 export { Timeline, type MarkerCallback, type TimelineCallback } from './timeline';
-export { TweenAt, type Tween } from './tween';
+export { Tween, TweenAt } from './tween';
 export { Unit } from './unit';

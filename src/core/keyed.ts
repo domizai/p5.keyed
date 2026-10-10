@@ -14,6 +14,7 @@ import {
     type LerpFunction,
 } from './lerps';
 import type { Lerpable } from './lerpable';
+import { Path } from './paths';
 import type { Pin } from './pin';
 import { settings } from './settings';
 import { Timeline } from './timeline';
@@ -208,14 +209,23 @@ export class Keyed<A> {
     /**
      * Adds a key at time t, on a pin, or the key itself (adding the same Key again replaces its tween).
      * The value is a copy of what you pass; or a tween, a function of position 0..1, or a TweenAt to follow instead.
-     * Functions and TweenAt objects are always read as tweens, so a Keyed can't hold those as its own values.
+     * Functions, TweenAt and Path objects are always read as tweens, so a Keyed can't hold those as its own values.
      */
     key(at: Key | Pin | number, value: A): this;
     key(at: Key | Pin | number, tween: Tween<A>): this;
     key(at: Key | Pin | number, tweenAt: TweenAt<A>): this;
-    key(at: Key | Pin | number, v: A | Tween<A> | TweenAt<A>): this {
+    /** A path travels all of it from key to key; path.at(position) pins a key to one position on it. */
+    key(at: Key | Pin | number, path: A extends p5.Vector ? Path : never): this;
+    key(at: Key | Pin | number, v: A | Tween<A> | TweenAt<A> | Path): this {
         const key = at instanceof Key ? at : Key.at(at);
-        const tween = v instanceof TweenAt ? v : typeof v === 'function' ? new TweenAt(v as Tween<A>) : this.#constant(v);
+        const tween =
+            v instanceof TweenAt
+                ? v
+                : v instanceof Path
+                  ? new TweenAt(v.tween() as Tween<A>)
+                  : typeof v === 'function'
+                    ? new TweenAt(v as Tween<A>)
+                    : this.#constant(v);
 
         const existing = this.#keys.find((e) => e.key === key);
         if (existing) {

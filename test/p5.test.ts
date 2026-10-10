@@ -164,6 +164,22 @@ describe('Keyed.of', () => {
         expect(v.value(0.5).x).toBe(5);
         expect(v.value(0.5)).toBeInstanceOf(p5.Vector);
     });
+
+    it('recognizes them by constructor when p5 does not mark them (older p5 2.x versions)', () => {
+        // Their own lerp() would change the key in place, so mistaking them for Lerpable is not harmless.
+        const unmark = <T extends object>(value: T, flag: string): T =>
+            Object.defineProperty(value, flag, { value: false, configurable: true });
+        const vec = (x: number, y: number) => unmark(new p5.Vector(x, y), 'isVector');
+        const col = (css: string) => unmark(new Color([css]), 'isColor');
+
+        const a = vec(0, 0);
+        const v = Keyed.of(a).key(0, vec(0, 0)).key(1, unmark(new p5.Vector(10, 10, 10), 'isVector'));
+        // p5.Vector's own lerp() would keep the first vector's two dimensions, VectorLerp blends z as well.
+        expect(v.value(0.5).z).toBe(5);
+        expect(a.x).toBe(0);
+        const c = Keyed.of(col('#ff0000')).key(0, col('#ff0000')).key(1, col('#0000ff'));
+        expect(rgba(c.value(0.5))).toEqual([127.5, 0, 127.5, 1]);
+    });
 });
 
 describe('binding p5 types', () => {

@@ -72,8 +72,8 @@ export function keyedAddon(p5: unknown, _fn: unknown, lifecycles: Lifecycles): v
     };
 }
 
-// Classes are assigned to window instead of p5's fn: in global mode p5 binds every function on fn, which
-// would strip static members like Key.at(). Doing it here also makes them usable above setup().
+// Classes are assigned to the global object instead of p5's fn: in global mode p5 binds every function on fn, which
+// would strip static members like Key.at(). Doing it before setup() also makes them usable above it.
 const globals = {
     AngleLerp,
     BooleanLerp,
@@ -108,11 +108,14 @@ const globals = {
     Wiggle,
 };
 
-declare const p5: { registerAddon?: (addon: typeof keyedAddon) => void } | undefined;
-
-if (typeof window !== 'undefined') {
-    Object.assign(window, globals);
-}
-if (typeof p5 !== 'undefined' && typeof p5.registerAddon === 'function') {
-    p5.registerAddon(keyedAddon);
+/**
+ * Makes the classes (Keyed, Key, Easing, Timeline, ...) globals, like in a sketch with the script tag.
+ * Needed for p5's global mode when the library is imported as a module; instance mode doesn't need it.
+ * target is the global object unless given.
+ */
+export function exposeGlobals(target: object = globalThis): void {
+    if (target === undefined || target === null) {
+        throw new TypeError('exposeGlobals() needs an object to put the classes on');
+    }
+    Object.assign(target, globals);
 }

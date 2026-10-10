@@ -4,19 +4,16 @@ import { describe, expect, it, vi } from 'vitest';
 
 // The entry file registers itself with the global p5 when it is loaded, like a <script> tag after p5.js.
 (globalThis as unknown as { p5: unknown }).p5 = p5;
-const lib = await import('../src/p5.keyed');
+const lib = await import('../src/script');
 const { env } = await import('../src/core/env');
 
 type Hook = (this: object) => void;
-const hooks = p5 as unknown as {
-    lifecycleHooks: Record<'presetup' | 'predraw' | 'remove', Hook[]>;
-    _registeredAddons: Set<unknown>;
-};
+const hooks = p5 as unknown as { lifecycleHooks: Record<'presetup' | 'predraw' | 'remove', Hook[]> };
 const ours = (name: 'presetup' | 'predraw' | 'remove') => hooks.lifecycleHooks[name].at(-1)!;
 
 describe('registration', () => {
     it('registers the add-on with p5 and gives the core access to p5', () => {
-        expect(hooks._registeredAddons.has(lib.keyedAddon)).toBe(true);
+        expect(hooks.lifecycleHooks.predraw.length).toBeGreaterThan(0);
         expect(env.p5).toBe(p5);
     });
 

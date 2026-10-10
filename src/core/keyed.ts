@@ -1,7 +1,7 @@
 import type p5 from 'p5';
 import { binder, propertySetter } from './binder';
 import { toTimeEffect, type TimeEffect, type TimeEffectObject } from './effects';
-import { env, p5Runtime } from './env';
+import { env, isP5Color, isP5Vector, p5Runtime } from './env';
 import { Key, segmentEasing } from './key';
 import {
     BooleanLerp,
@@ -137,10 +137,10 @@ export class Keyed<A> {
                 return Keyed.ofBoolean(value);
         }
         if (typeof value === 'object' && value !== null) {
-            const v = value as { isColor?: boolean; isVector?: boolean; lerp?: unknown };
+            const v = value as { lerp?: unknown };
             // Before the Lerpable check: p5.Color and p5.Vector have a lerp() too, but with another meaning.
-            if (v.isColor === true) return Keyed.ofColor(value as p5.Color);
-            if (v.isVector === true) return Keyed.ofVector(value as p5.Vector);
+            if (isP5Color(value)) return Keyed.ofColor(value as p5.Color);
+            if (isP5Vector(value)) return Keyed.ofVector(value as p5.Vector);
             if (typeof v.lerp === 'function') {
                 return new Keyed<Lerpable<never>>((a, b, d) => a.lerp(b as never, d), value as Lerpable<never>);
             }

@@ -39,15 +39,28 @@ function draw() {
 
 ## Installation
 
-p5.keyed is an add-on for p5.js 2.x. Load `lib/p5.keyed.js` (or `lib/p5.keyed.min.js`) after p5.js:
+p5.keyed is an add-on for p5.js 2.x. Load it from the CDN after p5.js:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/p5@2/lib/p5.min.js"></script>
-<script src="p5.keyed.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5.keyed@1/lib/p5.keyed.min.js"></script>
 <script src="sketch.js"></script>
 ```
 
-With a bundler, import it as an ES module (`lib/p5.keyed.esm.js`) and register it with `p5.registerAddon(keyedAddon)`. See the [installation page](https://domizai.github.io/p5.keyed/installation.html) for details.
+Or install it with npm and load `node_modules/p5.keyed/lib/p5.keyed.js`, or import the ES module in a bundler:
+
+```sh
+npm install p5.keyed
+```
+
+```js
+import p5 from 'p5';
+import { keyedAddon, Keyed } from 'p5.keyed';
+
+p5.registerAddon(keyedAddon);
+```
+
+See the [installation page](https://domizai.github.io/p5.keyed/installation.html) for instance mode, global mode with a bundler and editor types.
 
 ## Examples
 
@@ -79,5 +92,7 @@ uv run mkdocs serve  # or: uv run mkdocs build
 ```
 
 * * *
+
+Tested with p5.js 2.0.0 to 2.3.4 and Node 20 and 24.
 
 AI coding assistants were used to port [Keyed](https://github.com/domizai/Keyed) to p5.js, including the tests, examples and documentation.

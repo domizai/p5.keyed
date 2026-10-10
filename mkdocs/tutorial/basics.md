@@ -129,4 +129,15 @@ The current time of the default timeline is `Keyed.defaultTimeline().t()`. Hover
     --8<-- "01_Basics/AnyTime/sketch.js"
     ```
 
+!!! tip "Text and stroke"
+    p5 outlines `text()` with the current stroke, and the stroke stays set from one frame to the next. If a line you drew earlier (like a timeline bar) leaves a stroke on, your text looks doubled or blurry. Call `noStroke()` before drawing text:
+
+    ```js
+    noStroke();
+    fill(0);
+    text(`t = ${nf(tm.t(), 1, 2)}`, 40, 40);
+    ```
+
+    Processing's `text()` ignores the stroke, so this is a difference to keep in mind when you port a sketch.
+
 Next: [Easing](easing.md).

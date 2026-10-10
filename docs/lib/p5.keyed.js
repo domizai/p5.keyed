@@ -37,9 +37,9 @@ var p5keyed = (() => {
     }
   });
 
-  // src/p5.keyed.ts
-  var p5_keyed_exports = {};
-  __export(p5_keyed_exports, {
+  // src/script.ts
+  var script_exports = {};
+  __export(script_exports, {
     AngleLerp: () => AngleLerp,
     BooleanLerp: () => BooleanLerp,
     ColorLerp: () => ColorLerp,
@@ -73,6 +73,7 @@ var p5keyed = (() => {
     Unit: () => Unit,
     VectorLerp: () => VectorLerp,
     Wiggle: () => Wiggle,
+    exposeGlobals: () => exposeGlobals,
     keyedAddon: () => keyedAddon,
     settings: () => settings,
     ticker: () => ticker
@@ -172,6 +173,12 @@ var p5keyed = (() => {
       throw new Error("no sketch to draw on: pass the p5 instance or a p5.Graphics, or call Keyed.init() in setup()");
     }
     return target;
+  }
+  function isP5Vector(value) {
+    return value?.isVector === true || !!env.p5 && value instanceof env.p5.Vector;
+  }
+  function isP5Color(value) {
+    return value?.isColor === true || !!env.p5 && value instanceof env.p5.Color;
   }
 
   // src/core/lerps.ts
@@ -1702,8 +1709,8 @@ var p5keyed = (() => {
       }
       if (typeof value === "object" && value !== null) {
         const v = value;
-        if (v.isColor === true) return _Keyed.ofColor(value);
-        if (v.isVector === true) return _Keyed.ofVector(value);
+        if (isP5Color(value)) return _Keyed.ofColor(value);
+        if (isP5Vector(value)) return _Keyed.ofVector(value);
         if (typeof v.lerp === "function") {
           return new _Keyed((a, b, d) => a.lerp(b, d), value);
         }
@@ -2130,11 +2137,23 @@ var p5keyed = (() => {
     VectorLerp,
     Wiggle
   };
+  function exposeGlobals(target = globalThis) {
+    if (target === void 0 || target === null) {
+      throw new TypeError("exposeGlobals() needs an object to put the classes on");
+    }
+    Object.assign(target, globals);
+  }
+
+  // src/script.ts
   if (typeof window !== "undefined") {
-    Object.assign(window, globals);
+    exposeGlobals(window);
   }
-  if (typeof p5 !== "undefined" && typeof p5.registerAddon === "function") {
-    p5.registerAddon(keyedAddon);
+  if (typeof p5 !== "undefined") {
+    if (typeof p5.registerAddon === "function") {
+      p5.registerAddon(keyedAddon);
+    } else {
+      console.warn("p5.keyed needs p5.js 2.x: this p5 has no registerAddon(), so Keyed will not run. Load p5.js 2.x before p5.keyed.js.");
+    }
   }
-  return __toCommonJS(p5_keyed_exports);
+  return __toCommonJS(script_exports);
 })();

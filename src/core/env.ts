@@ -31,3 +31,14 @@ export function drawTarget(g: unknown): Record<string, (...args: unknown[]) => u
     }
     return target as Record<string, (...args: unknown[]) => unknown>;
 }
+
+// p5.Vector and p5.Color objects. Older p5 2.x versions don't mark them with isVector / isColor, so also ask the constructors.
+/** @internal */
+export function isP5Vector(value: unknown): boolean {
+    return (value as { isVector?: boolean })?.isVector === true || (!!env.p5 && value instanceof env.p5.Vector);
+}
+
+/** @internal */
+export function isP5Color(value: unknown): boolean {
+    return (value as { isColor?: boolean })?.isColor === true || (!!env.p5 && value instanceof env.p5.Color);
+}

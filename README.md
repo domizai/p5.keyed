@@ -95,4 +95,6 @@ uv run mkdocs serve  # or: uv run mkdocs build
 
 Tested with p5.js 2.0.0 to 2.3.4 and Node 20 and 24.
 
+Found a bug or have an idea? Please open an [issue](https://github.com/domizai/p5.keyed/issues).
+
 AI coding assistants were used to port [Keyed](https://github.com/domizai/Keyed) to p5.js, including the tests, examples and documentation.

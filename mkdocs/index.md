@@ -4,6 +4,8 @@
 
 p5.keyed brings keyframes to your sketches. Set a value at a few points in time, and p5.keyed blends everything in between, with easing, paths, effects and events. p5.keyed is the p5.js version of [Keyed for Processing](https://github.com/domizai/Keyed). 
 
+👉 [Try it in the p5.js Editor](https://editor.p5js.org/domizai/collections/9mOq-pRz6)
+
 <div class="sketch" data-sketch="11_Showcase/Showcase" data-size="640"></div>
 
 The showcase example, made with p5.keyed: drag the timeline to scrub, press <kbd>Space</kbd> to pause and <kbd>B</kbd> to toggle the bloom.

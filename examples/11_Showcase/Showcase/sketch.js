@@ -347,13 +347,23 @@ function drawMoons(ac) {
             line(a.x, a.y, a.z, b.x, b.y, b.z);
         }
         const p = trail[0];
-        strokeRgb(ac, 60);
-        strokeWeight(26);
-        point(p.x, p.y, p.z);
-        stroke(255);
-        strokeWeight(11);
-        point(p.x, p.y, p.z);
+        noStroke();
+        fillRgb(ac, 60);
+        disc(p, 26);
+        fill(255);
+        disc(p, 11);
     }
+}
+
+// A circle at p that always faces the screen: the turntable and the camera are undone around it.
+function disc(p, diameter) {
+    const q = cam.value();
+    push();
+    translate(p.x, p.y, p.z);
+    rotateZ(-spin.value());
+    new Quaternion(q.w, -q.x, -q.y, -q.z).apply();
+    circle(0, 0, diameter);
+    pop();
 }
 
 function drawComet(ac) {
@@ -539,6 +549,10 @@ function randomUnitVector3() {
 
 function strokeRgb(col, alpha) {
     stroke(red(col), green(col), blue(col), alpha);
+}
+
+function fillRgb(col, alpha) {
+    fill(red(col), green(col), blue(col), alpha);
 }
 
 function mousePressed() {

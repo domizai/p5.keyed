@@ -1,7 +1,7 @@
-site_name: Keyed
-site_description: Keyframe animation for Processing.
+site_name: p5.keyed
+site_description: Keyframe animation for p5.js.
 
-repo_url: https://github.com/domizai/Keyed
+repo_url: https://github.com/domizai/p5.keyed
 docs_dir: mkdocs
 site_dir: docs
 
@@ -9,6 +9,9 @@ copyright: GNU General Public License
 
 plugins:
   - offline
+
+hooks:
+  - mkdocs_hooks.py
 
 theme:
   name: material
@@ -36,6 +39,9 @@ theme:
 
 extra_css:
   - assets/extra.css
+
+extra_javascript:
+  - assets/sketch.js
 
 markdown_extensions:
   - admonition

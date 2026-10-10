@@ -1,0 +1,1213 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Keyframe animation for p5.js.">
+      
+      
+      
+      
+        <link rel="prev" href="tutorial/export.html">
+      
+      
+        <link rel="next" href="changelog.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>API Overview - p5.keyed</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="assets/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api-overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="p5.keyed" class="md-header__button md-logo" aria-label="p5.keyed" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            p5.keyed
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API Overview
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/domizai/p5.keyed" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="p5.keyed" class="md-nav__button md-logo" aria-label="p5.keyed" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    p5.keyed
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/domizai/p5.keyed" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="installation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorial
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorial
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorial/basics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorial/easing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Easing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorial/timeline.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Timelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorial/events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorial/binding.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Binding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorial/paths.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Paths
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorial/effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorial/types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorial/composition.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Composition
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tutorial/export.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Export
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="api.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup-and-the-clock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup and the clock
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#animated-values-keyeda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animated values: Keyed&lt;A&gt;
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keys-pins-and-easing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keys, pins and easing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timeline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Events
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tweens-and-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tweens and paths
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effects
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lerps-and-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lerps and types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#composition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Composition
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="changelog.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup-and-the-clock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup and the clock
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#animated-values-keyeda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animated values: Keyed&lt;A&gt;
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keys-pins-and-easing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keys, pins and easing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timeline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Events
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tweens-and-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tweens and paths
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effects
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lerps-and-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lerps and types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#composition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Composition
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="api-overview">API Overview<a class="headerlink" href="#api-overview" title="Permanent link">&para;</a></h1>
+<p>A compact summary of the library. Each section links to the tutorial chapter that explains it with examples.</p>
+<h2 id="setup-and-the-clock">Setup and the clock<a class="headerlink" href="#setup-and-the-clock" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><code>Keyed.init()</code></strong>, called in <code>setup()</code>, hooks Keyed into p5 and returns the <strong>default timeline</strong>, used by every value that isn't given a timeline. In instance mode, call <strong><code>Keyed.init(p)</code></strong>.</li>
+<li><strong>Global settings</strong>, set before creating timelines:<ul>
+<li><code>Keyed.setUnit(Keyed.SECOND | Keyed.FRAME)</code> measures times in seconds or frames.</li>
+<li><code>Keyed.setFrameRate(fps)</code> sets the frame rate used to convert between frames and seconds.</li>
+<li><code>Keyed.sync(bool)</code>: <code>true</code> follows real time; <code>false</code> advances exactly one frame per <code>draw()</code>, for repeatable exports.</li>
+<li><code>Keyed.autoplay(bool)</code> turns automatic advancing on or off.</li>
+</ul>
+</li>
+<li>Read them back with <code>Keyed.unit()</code>, <code>Keyed.frameRate()</code>, <code>Keyed.isSynced()</code>, <code>Keyed.isAutoplay()</code>.</li>
+<li><code>Keyed.defaultTimeline()</code> returns the current default timeline.</li>
+</ul>
+<p>See <a href="tutorial/basics.html">Getting Started</a> and <a href="tutorial/timeline.html#frames-instead-of-seconds">Timelines</a>.</p>
+<h2 id="animated-values-keyeda">Animated values: <code>Keyed&lt;A&gt;</code><a class="headerlink" href="#animated-values-keyeda" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Built-in types:</strong> <code>Keyed.ofFloat()</code>, <code>ofInt()</code>, <code>ofColor()</code>, <code>ofBoolean()</code>, <code>ofString()</code>, <code>ofVector()</code>, each optionally with a default value used while there are no keys.</li>
+<li><strong>Shorthand:</strong> <code>Keyed.of(value)</code> picks the type from a number, string, boolean, <code>p5.Vector</code>, <code>p5.Color</code> or any object with <code>lerp(b, d)</code>.</li>
+<li><strong>Any type:</strong> <code>new Keyed(lerp, defaultValue)</code>, where <code>lerp</code> is a function <code>(a, b, d) =&gt; value</code> or an object with <code>lerp(a, b, d)</code>.</li>
+<li><strong>Keys:</strong> <code>key(tOrPinOrKey, value)</code>, <code>removeKey(keyOrPin)</code>, <code>clearKeys()</code>, <code>keys()</code>.</li>
+<li><strong>Reading:</strong> <code>value()</code> is the value now; <code>value(t)</code> the value at any time.</li>
+<li><strong><code>echo(samples, delay)</code></strong> returns an array of the value at now, now - delay, now - 2 * delay, ...</li>
+<li><strong><code>setTimeline(tm)</code></strong> attaches the value to a timeline other than the default; <code>timeline()</code> reads it back.</li>
+</ul>
+<p>See <a href="tutorial/basics.html">Getting Started</a>.</p>
+<h2 id="keys-pins-and-easing">Keys, pins and easing<a class="headerlink" href="#keys-pins-and-easing" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><code>Key.at(tOrPin)</code></strong> creates a key with its own easing:<ul>
+<li>Influence, After Effects style: <code>setEasing(1 / 3)</code>, <code>setEasingIn(...)</code>, <code>setEasingOut(...)</code>.</li>
+<li>Curves: <code>setEasing(Easing.CUBIC_IN_OUT)</code> and other <code>QUAD</code>/<code>CUBIC</code>/<code>QUART</code>/<code>QUINT</code> presets, <code>SMOOTHSTEP</code>, <code>HOLD</code>.</li>
+<li><code>hold()</code> keeps the value until the next key.</li>
+</ul>
+</li>
+<li><strong>Custom easing:</strong> <code>Easing.cubicBezier(...)</code>, <code>quadraticBezier(...)</code>, <code>smoothstep(...)</code>, <code>steps(n)</code>, <code>powerIn</code>/<code>powerOut</code>/<code>powerInOut(p)</code>, or any function <code>d =&gt; ...</code>.</li>
+<li>Every easing is a plain function: call <code>Easing.CUBIC_IN(d)</code>, not <code>.apply(d)</code>.</li>
+<li><strong><code>Pin.at(t)</code></strong> is a point in time shared by keys and markers. <code>pin.to(t)</code> moves all of them; <code>addListener()</code> reports moves.</li>
+</ul>
+<p>See <a href="tutorial/easing.html">Easing</a> and <a href="tutorial/timeline.html#pins">Pins</a>.</p>
+<h2 id="timeline">Timeline<a class="headerlink" href="#timeline" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Creating:</strong> <code>new Timeline()</code>, then <code>value.setTimeline(tm)</code>. Several timelines are independent clocks. <code>new Timeline(null)</code> only moves via <code>step()</code> or <code>to()</code>.</li>
+<li><strong>Duration:</strong> <code>setDuration(d)</code> loops; <code>setDuration(d, false)</code> plays once. <code>loop(bool)</code>, <code>isLooping()</code>, <code>isFinished()</code>.</li>
+<li><strong>Playback:</strong> <code>play(bool)</code>, <code>isPlaying()</code>, <code>setSpeed(s)</code> (negative plays backwards), <code>to(t)</code> to jump, <code>to(t, true)</code> to jump and fire markers on the way, <code>step()</code> to advance automatically or <code>step(amount)</code> by a chosen amount.</li>
+<li><strong>Timing:</strong> <code>t()</code> is the current time, <code>t(offset)</code> a time relative to it. <code>sync(bool)</code>, <code>autoplay(bool)</code> and <code>setFixedStep(dt)</code> control how it advances.</li>
+<li>Read them back with <code>duration()</code>, <code>speed()</code>, <code>fixedStep()</code>, <code>isSynced()</code>, <code>isAutoplay()</code> and <code>unit()</code>.</li>
+<li><strong><code>dispose()</code></strong> stops a timeline you no longer need.</li>
+</ul>
+<p>See <a href="tutorial/timeline.html">Timelines</a>.</p>
+<h2 id="events">Events<a class="headerlink" href="#events" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Markers:</strong> <code>addMarker(tOrPin, callback)</code> or <code>addMarker(name, tOrPin, callback)</code>, <code>marker(name)</code>, <code>markers()</code>, <code>removeMarker(m)</code>.</li>
+<li><strong>Listeners:</strong> <code>onLoop(callback)</code>, <code>onFinish(callback)</code>, <code>removeListener(callback)</code>.</li>
+<li>Markers fire on playback in either direction, also when a loop wraps around. A plain <code>to(t)</code> fires nothing.</li>
+</ul>
+<p>See <a href="tutorial/events.html">Events</a>.</p>
+<h2 id="binding">Binding<a class="headerlink" href="#binding" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><code>Keyed.bind(obj, 'prop')</code></strong> binds by property name and picks the type from the property's current value.</li>
+<li><strong><code>Keyed.bind(lerp, defaultValue, setter)</code></strong> creates and binds a value in one call.</li>
+<li><strong><code>keyed.bind(setter)</code></strong> or <strong><code>keyed.bind(obj, 'prop')</code></strong> binds an existing value.</li>
+<li><strong><code>unbind()</code></strong> stops updating; <strong><code>apply()</code></strong> writes the current value immediately.</li>
+<li>Binding runs after the timelines, so bound values are as current as <code>value()</code> inside <code>draw()</code>.</li>
+</ul>
+<p>See <a href="tutorial/binding.html">Binding</a>.</p>
+<h2 id="tweens-and-paths">Tweens and paths<a class="headerlink" href="#tweens-and-paths" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><code>Tween&lt;T&gt;</code></strong> is a plain function of <code>d</code> from 0 to 1. A key can follow a tween instead of a fixed value; <code>Tween.at(tween, d)</code> fixes a key to one position.</li>
+<li><code>Tween.map(tween, f)</code> converts a tween's values.</li>
+<li><strong>Paths:</strong> <code>QuadraticBezier</code>, <code>CubicBezier</code> (both at constant speed), <code>Spline</code> (like <code>curveVertex()</code>, with <code>setTightness()</code>), and <code>Curve</code> to chain them with <code>add()</code>.</li>
+<li>A <code>Path</code> has <code>value(d)</code>, <code>length()</code>, <code>slice(t0, t1)</code>, <code>at(d)</code>, <code>map(f)</code>, <code>x()</code>, <code>y()</code>, <code>z()</code> and <code>tween()</code>.</li>
+<li><code>slice(t0, t1)</code> is part of a path; swapping the ends reverses it.</li>
+</ul>
+<p>See <a href="tutorial/paths.html">Paths</a>.</p>
+<h2 id="effects">Effects<a class="headerlink" href="#effects" title="Permanent link">&para;</a></h2>
+<p>Added with <code>addEffect(effect)</code>, applied in the order added.</p>
+<ul>
+<li>Effects are either functions <code>(source, t) =&gt; value</code> or objects with <code>apply(source, t)</code>.</li>
+<li><strong>Value effects:</strong> <code>Wiggle</code>, <code>Orbit</code>, <code>GridSnap</code>.</li>
+<li><strong>Time effects:</strong> <code>Spring</code>, <code>Lag</code>, <code>StopMotion</code>.</li>
+<li><strong>Shortcuts for <code>p5.Vector</code>s:</strong> <code>Effect.wiggle(...)</code>, <code>orbit(...)</code>, <code>gridSnap(...)</code>, <code>spring(...)</code>, <code>lag(...)</code>.</li>
+<li><strong>Custom:</strong> write your own <code>(source, t) =&gt; ...</code>, or a class with <code>apply(source, t)</code>.</li>
+<li><code>new Spring(lerp, frequency, damping)</code> and <code>new Lag(lerp, duration, samples)</code> work for any type with a suitable lerp.</li>
+</ul>
+<p>See <a href="tutorial/effects.html">Effects</a> and <a href="tutorial/effects.html#echo">Echo</a>.</p>
+<h2 id="lerps-and-types">Lerps and types<a class="headerlink" href="#lerps-and-types" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Lerps:</strong> <code>FloatLerp</code>, <code>IntLerp</code>, <code>VectorLerp</code>, <code>ColorLerp</code>, <code>AngleLerp</code>, <code>StringLerp</code>, <code>BooleanLerp</code>, <code>StepLerp</code>, or any function <code>(a, b, d) =&gt; ...</code>.</li>
+<li><strong><code>Lerpable</code></strong> means an object has <code>lerp(b, d)</code> and returns a new value.</li>
+<li><strong><code>Quaternion</code>:</strong> immutable 3D rotation without gimbal lock; <code>identity()</code>, <code>fromAxisAngle(axis, angle)</code>, <code>mult()</code>, <code>axis()</code>, <code>angle()</code>, <code>apply()</code>.</li>
+<li><strong><code>ShapeMorph</code>:</strong> morphs between polygons with different point counts, in 2D or 3D; <code>vertices()</code> emits <code>vertex()</code> calls.</li>
+</ul>
+<p>See <a href="tutorial/types.html">Types</a>.</p>
+<h2 id="composition">Composition<a class="headerlink" href="#composition" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Subclass <code>Composition</code> for a reusable animation on its own one-shot timeline. Key times are local.</li>
+<li>Inside the subclass, create values with <code>this.keyed(lerp, default)</code> or <code>this.add(keyed)</code>.</li>
+<li><code>timeline()</code>, <code>play()</code>, <code>isFinished()</code>, <code>dispose()</code>.</li>
+</ul>
+<p>See <a href="tutorial/composition.html">Composition</a> and <a href="tutorial/export.html">Export</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="tutorial/export.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 10. Export">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                10. Export
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="changelog.html" class="md-footer__link md-footer__link--next" aria-label="Next: Changelog">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Changelog
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      GNU General Public License
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.footer", "navigation.sections", "navigation.indexes", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="assets/sketch.js"></script>
+      
+    
+  </body>
+</html>

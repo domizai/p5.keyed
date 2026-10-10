@@ -1,0 +1,37 @@
+{
+  "name": "p5.keyed",
+  "version": "0.1.0",
+  "description": "Keyframe animation for p5.js: set values at a few points in time and Keyed blends everything in between.",
+  "author": "Dominique Schmitz (http://www.domizai.ch)",
+  "license": "LGPL-2.1",
+  "type": "module",
+  "main": "lib/p5.keyed.js",
+  "module": "lib/p5.keyed.esm.js",
+  "types": "lib/types/p5.keyed.d.ts",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "p5",
+    "p5.js",
+    "animation",
+    "keyframes",
+    "easing",
+    "timeline",
+    "tween"
+  ],
+  "scripts": {
+    "build": "npm run build:js && npm run build:types",
+    "build:js": "esbuild src/p5.keyed.ts --bundle --format=iife --global-name=p5keyed --target=es2020 --outfile=lib/p5.keyed.js && esbuild src/p5.keyed.ts --bundle --format=iife --global-name=p5keyed --target=es2020 --minify --outfile=lib/p5.keyed.min.js && esbuild src/p5.keyed.ts --bundle --format=esm --target=es2020 --outfile=lib/p5.keyed.esm.js",
+    "build:types": "tsc -p tsconfig.build.json",
+    "watch": "esbuild src/p5.keyed.ts --bundle --format=iife --global-name=p5keyed --target=es2020 --watch --outfile=lib/p5.keyed.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
+  }
+}

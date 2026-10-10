@@ -1,4 +1,5 @@
 import type p5 from 'p5';
+import { type TimeEffect, type TimeEffectObject } from './effects';
 import { Key } from './key';
 import { type Lerp } from './lerps';
 import type { Lerpable } from './lerpable';
@@ -94,4 +95,11 @@ export declare class Keyed<A> {
     keys(): Key[];
     /** Timeline set with setTimeline(), otherwise the default timeline. */
     timeline(): Timeline;
+    /**
+     * Wraps the current output; effects apply in the order added. On a looping timeline, times they sample outside the
+     * duration wrap around. Takes a function (source, t) => value or an object with apply(source, t), like Wiggle.
+     */
+    addEffect(effect: TimeEffect<A> | TimeEffectObject<A>): this;
+    /** Values at now, now - delay, now - 2 * delay, ...; a negative delay samples the future. */
+    echo(samples: number, delay: number): A[];
 }

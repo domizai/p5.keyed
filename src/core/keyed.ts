@@ -1,5 +1,6 @@
 import type p5 from 'p5';
 import { binder, propertySetter } from './binder';
+import { toTimeEffect, type TimeEffect, type TimeEffectObject } from './effects';
 import { env, p5Runtime } from './env';
 import { Key, segmentEasing } from './key';
 import {
@@ -297,6 +298,36 @@ export class Keyed<A> {
     /** Timeline set with setTimeline(), otherwise the default timeline. */
     timeline(): Timeline {
         return this.#tm ?? Keyed.#defaultTimeline;
+    }
+
+    /**
+     * Wraps the current output; effects apply in the order added. On a looping timeline, times they sample outside the
+     * duration wrap around. Takes a function (source, t) => value or an object with apply(source, t), like Wiggle.
+     */
+    addEffect(effect: TimeEffect<A> | TimeEffectObject<A>): this {
+        const apply = toTimeEffect(effect);
+        const source = this.#output;
+        const wrapped: Tween<A> = (s) => source(this.#wrap(s));
+        this.#output = (s) => apply(wrapped, s);
+        return this;
+    }
+
+    // On a looping timeline, times an effect samples outside [0, duration] wrap around like playback,
+    // so effects looking into the past (Spring, Lag) continue seamlessly across the loop.
+    #wrap(s: number): number {
+        const tm = this.timeline();
+        const d = tm.duration();
+        if (!tm.isLooping() || d <= 0 || (s >= 0 && s <= d)) return s;
+        return ((s % d) + d) % d;
+    }
+
+    /** Values at now, now - delay, now - 2 * delay, ...; a negative delay samples the future. */
+    echo(samples: number, delay: number): A[] {
+        if (!Number.isInteger(samples) || samples < 0) throw new RangeError(`samples must be a whole number >= 0, was ${samples}`);
+        const tm = this.timeline();
+        const values: A[] = [];
+        for (let i = 0; i < samples; i++) values.push(this.value(tm.t(-delay * i)));
+        return values;
     }
 
     #raw(t: number): A {

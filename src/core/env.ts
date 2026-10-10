@@ -11,7 +11,9 @@ export const env: {
     p5: P5Runtime | undefined;
     /** Called by Keyed.init(sketch) so a sketch in instance mode can take over the default ticker. */
     claim: ((sketch: unknown) => void) | undefined;
-} = { p5: undefined, claim: undefined };
+    /** The sketch that owns the default timeline: what Quaternion.apply() and ShapeMorph.vertices() draw on without an argument. */
+    sketch: (() => unknown) | undefined;
+} = { p5: undefined, claim: undefined, sketch: undefined };
 
 /** The p5 constructor, for creating vectors and colors. */
 export function p5Runtime(): P5Runtime {
@@ -19,4 +21,13 @@ export function p5Runtime(): P5Runtime {
         throw new Error('p5.js was not found: load p5.js before p5.keyed.js, or register keyedAddon with p5.registerAddon()');
     }
     return env.p5;
+}
+
+/** Something that can draw: a p5 sketch (instance) or a p5.Graphics. */
+export function drawTarget(g: unknown): Record<string, (...args: unknown[]) => unknown> {
+    const target = g ?? env.sketch?.();
+    if (!target) {
+        throw new Error('no sketch to draw on: pass the p5 instance or a p5.Graphics, or call Keyed.init() in setup()');
+    }
+    return target as Record<string, (...args: unknown[]) => unknown>;
 }

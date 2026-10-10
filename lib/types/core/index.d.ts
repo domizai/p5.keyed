@@ -7,7 +7,9 @@ export { AngleLerp, BooleanLerp, ColorLerp, FloatLerp, IntLerp, StepLerp, String
 export { Marker } from './marker';
 export { CubicBezier, Curve, Path, QuadraticBezier, Spline, type Point } from './paths';
 export { Pin } from './pin';
+export { Quaternion } from './quaternion';
 export { settings } from './settings';
+export { ShapeMorph } from './shapemorph';
 export { Ticker, ticker, type Tickable } from './ticker';
 export { Timeline, type MarkerCallback, type TimelineCallback } from './timeline';
 export { Tween, TweenAt } from './tween';

@@ -17,6 +17,8 @@ import {
     Path,
     Pin,
     QuadraticBezier,
+    Quaternion,
+    ShapeMorph,
     Spline,
     Spring,
     StepLerp,
@@ -51,6 +53,7 @@ export function keyedAddon(p5: unknown, _fn: unknown, lifecycles: Lifecycles): v
     env.claim = (sketch) => {
         if (sketch) owner = sketch as P5Sketch;
     };
+    env.sketch = () => owner;
     lifecycles.presetup = function () {
         owner ??= this;
     };
@@ -89,6 +92,8 @@ const globals = {
     Path,
     Pin,
     QuadraticBezier,
+    Quaternion,
+    ShapeMorph,
     Spline,
     Spring,
     StepLerp,

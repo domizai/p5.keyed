@@ -33,4 +33,13 @@ describe('Pin', () => {
         expect(Pin.at(2).compareTo(Pin.at(1))).toBeGreaterThan(0);
         expect(Pin.at(2).compareTo(Pin.at(2))).toBe(0);
     });
+
+    it('only accepts numbers as times, so a typo cannot corrupt the order of keys', () => {
+        expect(() => Pin.at(NaN)).toThrow(TypeError);
+        expect(() => Pin.at('1' as never)).toThrow(TypeError);
+        expect(() => Pin.at(null as never)).toThrow(TypeError);
+        expect(() => Pin.at(0).to(NaN)).toThrow(TypeError);
+        expect(Pin.at(Infinity).t()).toBe(Infinity);
+        expect(Pin.at(-1).to(-0).t()).toBe(-0);
+    });
 });

@@ -88,9 +88,12 @@ describe('Key easing', () => {
 describe('segmentEasing', () => {
     const samples = Array.from({ length: 101 }, (_, i) => i / 100);
 
-    it('is linear without influence', () => {
+    it('is exactly linear without influence', () => {
         const f = segmentEasing(Key.at(0), Key.at(1));
-        for (const d of samples) expect(f(d)).toBeCloseTo(d, 4);
+        for (const d of samples) expect(f(d)).toBe(d);
+        // Same curve the general formula gives.
+        const general = Easing.cubicBezier(0, 0, 1, 1);
+        for (const d of samples) expect(f(d)).toBeCloseTo(general(d), 5);
     });
 
     it('with 1/3 on both keys it eases in and out symmetrically (Easy Ease)', () => {

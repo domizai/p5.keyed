@@ -96,7 +96,13 @@ export class Key {
     }
 }
 
+const LINEAR: Easing = (d) => d;
+
 /** @internal Curve of the segment from one key to the next: the leaving key's Easing, otherwise the influence curve of both keys. */
 export function segmentEasing(from: Key, to: Key): Easing {
-    return from.easing() ?? Easing.cubicBezier(from.easingOut(), 0, 1 - to.easingIn(), 1);
+    const easing = from.easing();
+    if (easing) return easing;
+    // Without influence the curve is cubicBezier(0, 0, 1, 1), which is exactly the identity; skips the solver.
+    if (from.easingOut() === 0 && to.easingIn() === 0) return LINEAR;
+    return Easing.cubicBezier(from.easingOut(), 0, 1 - to.easingIn(), 1);
 }

@@ -1,4 +1,22 @@
-import { Easing, Key, Marker, Pin, Timeline, ticker } from './core';
+import {
+    AngleLerp,
+    BooleanLerp,
+    ColorLerp,
+    Easing,
+    FloatLerp,
+    IntLerp,
+    Key,
+    Keyed,
+    Marker,
+    Pin,
+    StepLerp,
+    StringLerp,
+    Timeline,
+    TweenAt,
+    VectorLerp,
+    ticker,
+} from './core';
+import { env, type P5Runtime } from './core/env';
 
 export * from './core';
 
@@ -14,7 +32,11 @@ type Lifecycles = Partial<Record<'presetup' | 'postsetup' | 'predraw' | 'postdra
 let owner: P5Sketch | null = null;
 
 /** The p5.js add-on: advances timelines before every draw(). Register it with p5.registerAddon() when using ES modules. */
-export function keyedAddon(_p5: unknown, _fn: unknown, lifecycles: Lifecycles): void {
+export function keyedAddon(p5: unknown, _fn: unknown, lifecycles: Lifecycles): void {
+    env.p5 = p5 as P5Runtime;
+    env.claim = (sketch) => {
+        if (sketch) owner = sketch as P5Sketch;
+    };
     lifecycles.presetup = function () {
         owner ??= this;
     };
@@ -24,14 +46,32 @@ export function keyedAddon(_p5: unknown, _fn: unknown, lifecycles: Lifecycles): 
     lifecycles.remove = function () {
         if (this === owner) {
             owner = null;
+            // Timelines belong to the sketch that made them; the default one is replaced so the next sketch starts clean.
             ticker.clear();
+            Keyed.init();
         }
     };
 }
 
 // Classes are assigned to window instead of p5's fn: in global mode p5 binds every function on fn, which
 // would strip static members like Key.at(). Doing it here also makes them usable above setup().
-const globals = { Easing, Key, Marker, Pin, Timeline };
+const globals = {
+    AngleLerp,
+    BooleanLerp,
+    ColorLerp,
+    Easing,
+    FloatLerp,
+    IntLerp,
+    Key,
+    Keyed,
+    Marker,
+    Pin,
+    StepLerp,
+    StringLerp,
+    Timeline,
+    TweenAt,
+    VectorLerp,
+};
 
 declare const p5: { registerAddon?: (addon: typeof keyedAddon) => void } | undefined;
 

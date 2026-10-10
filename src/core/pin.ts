@@ -1,3 +1,10 @@
+const checkTime = (t: number): number => {
+    if (typeof t !== 'number' || Number.isNaN(t)) {
+        throw new TypeError(`time must be a number, was ${String(t)}`);
+    }
+    return t;
+};
+
 /** A point in time that several keys can share; moving it moves all of them. */
 export class Pin {
     #t: number;
@@ -5,7 +12,7 @@ export class Pin {
 
     /** Pin at time t, 0 by default. */
     constructor(t = 0) {
-        this.#t = t;
+        this.#t = checkTime(t);
     }
 
     /** Pin at time t. */
@@ -20,7 +27,7 @@ export class Pin {
 
     /** Moves to time t and notifies listeners. */
     to(t: number): this {
-        this.#t = t;
+        this.#t = checkTime(t);
         if (this.#listeners) {
             // Copy so listeners may remove themselves.
             for (const listener of [...this.#listeners]) {

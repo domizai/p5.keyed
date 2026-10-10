@@ -1,8 +1,12 @@
 export { Easing } from './easing';
 export { Key } from './key';
+export { Keyed } from './keyed';
+export type { Lerpable } from './lerpable';
+export { AngleLerp, BooleanLerp, ColorLerp, FloatLerp, IntLerp, StepLerp, StringLerp, VectorLerp, type Lerp, type LerpFunction, type LerpObject, } from './lerps';
 export { Marker } from './marker';
 export { Pin } from './pin';
 export { settings } from './settings';
 export { Ticker, ticker, type Tickable } from './ticker';
 export { Timeline, type MarkerCallback, type TimelineCallback } from './timeline';
+export { TweenAt, type Tween } from './tween';
 export { Unit } from './unit';

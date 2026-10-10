@@ -1,0 +1,78 @@
+import type p5 from 'p5';
+import { Key } from './key';
+import { type Lerp } from './lerps';
+import type { Lerpable } from './lerpable';
+import type { Pin } from './pin';
+import { Timeline } from './timeline';
+import { TweenAt, type Tween } from './tween';
+import { Unit } from './unit';
+/** A value animated between keys, plus the library-wide settings as static methods. */
+export declare class Keyed<A> {
+    #private;
+    static readonly SECOND: "second";
+    static readonly FRAME: "frame";
+    /**
+     * Call in setup() to start from a fresh default timeline, which every value without its own timeline follows.
+     * Optional in global mode, where the library is hooked into p5 automatically; in instance mode pass the sketch.
+     */
+    static init(sketch?: unknown): Timeline;
+    /** Unit for the default timeline and new timelines. */
+    static unit(): Unit;
+    /** Sets the unit of the default timeline and of timelines created afterwards. */
+    static setUnit(unit: Unit): void;
+    /** Sync setting for new timelines. */
+    static isSynced(): boolean;
+    /** Sets sync for the default timeline and timelines created afterwards; see Timeline.sync(). */
+    static sync(sync?: boolean): void;
+    /** Autoplay setting for new timelines. */
+    static isAutoplay(): boolean;
+    /** Sets autoplay for the default timeline and timelines created afterwards; see Timeline.autoplay(). */
+    static autoplay(autoplay?: boolean): void;
+    /** Frame rate used to convert between frames and seconds. */
+    static frameRate(): number;
+    /** Must be > 0; pass the same value as p5's frameRate(). */
+    static setFrameRate(fps: number): void;
+    /** Used by Keyed values without their own timeline. */
+    static defaultTimeline(): Timeline;
+    /** Blends keys with lerp, a function (a, b, d) => value or an object with lerp(a, b, d); defaultValue is used while there are no keys. */
+    constructor(lerp: Lerp<A>, defaultValue: A);
+    /** Picks the type from the value: number, string, boolean, p5.Vector, p5.Color, or any object with lerp(b, d) that returns a new object. */
+    static of(value: number): Keyed<number>;
+    static of(value: string): Keyed<string>;
+    static of(value: boolean): Keyed<boolean>;
+    static of(value: p5.Vector): Keyed<p5.Vector>;
+    static of(value: p5.Color): Keyed<p5.Color>;
+    static of<A extends Lerpable<A>>(value: A): Keyed<A>;
+    /** Animated number, 0 while there are no keys. */
+    static ofFloat(defaultValue?: number): Keyed<number>;
+    /** Animated integer, rounded to the nearest one, 0 while there are no keys. */
+    static ofInt(defaultValue?: number): Keyed<number>;
+    /** Animated p5.Color, opaque black while there are no keys. See ColorLerp for how colors blend. */
+    static ofColor(defaultValue?: p5.Color): Keyed<p5.Color>;
+    /** Animated boolean, false while there are no keys. */
+    static ofBoolean(defaultValue?: boolean): Keyed<boolean>;
+    /** Animated string, empty while there are no keys. */
+    static ofString(defaultValue?: string): Keyed<string>;
+    /** Animated p5.Vector, (0, 0, 0) while there are no keys. */
+    static ofVector(defaultValue?: p5.Vector): Keyed<p5.Vector>;
+    /**
+     * Adds a key at time t, on a pin, or the key itself (adding the same Key again replaces its tween).
+     * The value is a copy of what you pass; or a tween, a function of position 0..1, or a TweenAt to follow instead.
+     * Functions and TweenAt objects are always read as tweens, so a Keyed can't hold those as its own values.
+     */
+    key(at: Key | Pin | number, value: A): this;
+    key(at: Key | Pin | number, tween: Tween<A>): this;
+    key(at: Key | Pin | number, tweenAt: TweenAt<A>): this;
+    /** Removes a key, or every key placed on a pin. */
+    removeKey(at: Key | Pin): this;
+    /** Removes all keys. */
+    clearKeys(): this;
+    /** Follows tm instead of the default timeline; null reverts to the default. */
+    setTimeline(tm: Timeline | null): this;
+    /** Value at time t, or at the timeline's current time, with effects applied. */
+    value(t?: number): A;
+    /** Keys sorted by time. */
+    keys(): Key[];
+    /** Timeline set with setTimeline(), otherwise the default timeline. */
+    timeline(): Timeline;
+}

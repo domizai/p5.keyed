@@ -1,3 +1,5 @@
+export { Easing } from './easing';
+export { Key } from './key';
 export { Marker } from './marker';
 export { Pin } from './pin';
 export { settings } from './settings';

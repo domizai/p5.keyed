@@ -1,4 +1,4 @@
-import { Marker, Pin, Timeline, ticker } from './core';
+import { Easing, Key, Marker, Pin, Timeline, ticker } from './core';
 
 export * from './core';
 
@@ -31,7 +31,7 @@ export function keyedAddon(_p5: unknown, _fn: unknown, lifecycles: Lifecycles): 
 
 // Classes are assigned to window instead of p5's fn: in global mode p5 binds every function on fn, which
 // would strip static members like Key.at(). Doing it here also makes them usable above setup().
-const globals = { Marker, Pin, Timeline };
+const globals = { Easing, Key, Marker, Pin, Timeline };
 
 declare const p5: { registerAddon?: (addon: typeof keyedAddon) => void } | undefined;
 

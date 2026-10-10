@@ -45,7 +45,7 @@ export class Timeline implements Tickable {
         driver?.add(this);
     }
 
-    /** @internal Called before each draw(). The first frame shows t = 0. */
+    /** Called by the ticker before each draw(). The first frame shows t = 0. */
     pre(): void {
         if (!this.#autoplay) {
             // Re-enabling autoplay starts a fresh clock instead of jumping by the paused gap.

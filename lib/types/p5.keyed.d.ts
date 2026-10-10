@@ -1,4 +1,4 @@
-export * from './core';
+export * from './core/index.js';
 /** What the add-on needs from a p5 sketch. */
 interface P5Sketch {
     _isGlobal?: boolean;

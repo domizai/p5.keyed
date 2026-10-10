@@ -1,6 +1,6 @@
-import { Keyed } from './keyed';
-import type { Lerp } from './lerps';
-import { Timeline } from './timeline';
+import { Keyed } from './keyed.js';
+import type { Lerp } from './lerps.js';
+import { Timeline } from './timeline.js';
 /**
  * Reusable animation with its own non-looping timeline; key times are local, 0 is when the instance starts.
  * Extend it, create Keyed values with keyed() or add(), and dispose() once isFinished().

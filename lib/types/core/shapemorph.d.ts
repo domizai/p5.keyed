@@ -1,5 +1,5 @@
 import type p5 from 'p5';
-import type { Lerpable } from './lerpable';
+import type { Lerpable } from './lerpable.js';
 /**
  * A closed polygon that morphs point by point. The shape with fewer points gets extra points on its longest edges,
  * so its outline stays the same and corners stay sharp. Start both shapes at the same angle to avoid twisting.

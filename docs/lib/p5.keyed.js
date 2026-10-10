@@ -1,3 +1,4 @@
+/*! p5.keyed v1.0.0 | LGPL-2.1 | https://github.com/domizai/p5.keyed */
 "use strict";
 var p5keyed = (() => {
   var __defProp = Object.defineProperty;
@@ -1323,7 +1324,7 @@ var p5keyed = (() => {
       __privateSet(this, _ticker, driver);
       driver?.add(this);
     }
-    /** @internal Called before each draw(). The first frame shows t = 0. */
+    /** Called by the ticker before each draw(). The first frame shows t = 0. */
     pre() {
       if (!__privateGet(this, _autoplay)) {
         __privateSet(this, _started, false);

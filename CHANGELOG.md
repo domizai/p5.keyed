@@ -1,7 +1,7 @@
 # Changelog
 
-All notable changes to Keyed are documented here.
+All notable changes to p5.keyed are documented here.
 
-## [1.0.0] - unreleased
+## [1.0.0] - 2024-10-10
 
-First release.
+First release: the p5.js version of [Keyed for Processing](https://github.com/domizai/Keyed), for p5.js 2.x.

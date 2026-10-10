@@ -1,5 +1,5 @@
 import type p5 from 'p5';
-import { Tween, TweenAt } from './tween';
+import { Tween, TweenAt } from './tween.js';
 /** Anything with x and y (and z): a p5.Vector, or a plain object like { x: 10, y: 20 }. */
 export interface Point {
     x: number;

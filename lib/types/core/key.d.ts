@@ -1,5 +1,5 @@
-import { Easing } from './easing';
-import { Pin } from './pin';
+import { Easing } from './easing.js';
+import { Pin } from './pin.js';
 /** A keyframe time, with easing for the segments around it. */
 export declare class Key {
     #private;

@@ -1,7 +1,7 @@
-import { Marker } from './marker';
-import { Pin } from './pin';
-import { type Tickable, type Ticker } from './ticker';
-import type { Unit } from './unit';
+import { Marker } from './marker.js';
+import { Pin } from './pin.js';
+import { type Tickable, type Ticker } from './ticker.js';
+import type { Unit } from './unit.js';
 export type MarkerCallback = (marker: Marker) => void;
 export type TimelineCallback = (timeline: Timeline) => void;
 /**
@@ -12,6 +12,8 @@ export declare class Timeline implements Tickable {
     #private;
     /** Advances before every draw(); null only moves via step() or to(). */
     constructor(driver?: Ticker | null);
+    /** Called by the ticker before each draw(). The first frame shows t = 0. */
+    pre(): void;
     /**
      * Without amount: advances by the fixed step if set; otherwise by real time when synced, or by one frame when not; times speed.
      * With amount: advances by it while playing, firing markers, onLoop and onFinish callbacks passed on the way.

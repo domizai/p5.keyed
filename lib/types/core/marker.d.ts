@@ -1,5 +1,5 @@
-import type { Pin } from './pin';
-import type { Timeline } from './timeline';
+import type { Pin } from './pin.js';
+import type { Timeline } from './timeline.js';
 /** A point on a Timeline that calls back when playback crosses it; create with Timeline.addMarker(). */
 export declare class Marker {
     #private;

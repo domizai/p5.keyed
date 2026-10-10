@@ -1,6 +1,6 @@
 import type p5 from 'p5';
-import { type Lerp } from './lerps';
-import type { Tween } from './tween';
+import { type Lerp } from './lerps.js';
+import type { Tween } from './tween.js';
 /**
  * Changes a value on top of its keys. It gets the animation as a function of time and the time itself, so it can read
  * the value at any other time: `(source, t) => source(t - 0.5)` plays the animation half a second late.

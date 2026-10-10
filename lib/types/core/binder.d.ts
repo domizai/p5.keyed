@@ -1,4 +1,4 @@
-import { type Tickable } from './ticker';
+import { type Tickable } from './ticker.js';
 /** A Keyed value that can write itself to its target. */
 export interface Bindable {
     apply(): unknown;

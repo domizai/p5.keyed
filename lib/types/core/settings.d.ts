@@ -1,4 +1,4 @@
-import { Unit } from './unit';
+import { Unit } from './unit.js';
 /** Library-wide settings; timelines read them when they are created. The Keyed class exposes them as static methods. */
 export declare const settings: {
     unit: Unit;

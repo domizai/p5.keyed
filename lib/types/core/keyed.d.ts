@@ -1,13 +1,13 @@
 import type p5 from 'p5';
-import { type TimeEffect, type TimeEffectObject } from './effects';
-import { Key } from './key';
-import { type Lerp } from './lerps';
-import type { Lerpable } from './lerpable';
-import { Path } from './paths';
-import type { Pin } from './pin';
-import { Timeline } from './timeline';
-import { TweenAt, type Tween } from './tween';
-import { Unit } from './unit';
+import { type TimeEffect, type TimeEffectObject } from './effects.js';
+import { Key } from './key.js';
+import { type Lerp } from './lerps.js';
+import type { Lerpable } from './lerpable.js';
+import { Path } from './paths.js';
+import type { Pin } from './pin.js';
+import { Timeline } from './timeline.js';
+import { TweenAt, type Tween } from './tween.js';
+import { Unit } from './unit.js';
 /** A value animated between keys, plus the library-wide settings as static methods. */
 export declare class Keyed<A> {
     #private;

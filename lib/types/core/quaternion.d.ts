@@ -1,5 +1,5 @@
 import type p5 from 'p5';
-import type { Lerpable } from './lerpable';
+import type { Lerpable } from './lerpable.js';
 type Axis = p5.Vector | readonly [number, number, number];
 /** An immutable 3D rotation. Blends with slerp along the shortest arc, without gimbal lock. */
 export declare class Quaternion implements Lerpable<Quaternion> {

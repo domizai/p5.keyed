@@ -1,6 +1,6 @@
 {
   "name": "p5.keyed",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Keyframe animation for p5.js: set values at a few points in time and Keyed blends everything in between.",
   "author": "Dominique Schmitz (http://www.domizai.ch)",
   "license": "LGPL-2.1",
@@ -9,25 +9,30 @@
   "module": "lib/p5.keyed.esm.js",
   "types": "lib/types/p5.keyed.d.ts",
   "files": [
-    "lib"
+    "lib",
+    "license.txt"
   ],
   "keywords": [
     "p5",
     "p5.js",
+    "p5js",
+    "addon",
     "animation",
     "keyframes",
     "easing",
     "timeline",
-    "tween"
+    "tween",
+    "processing"
   ],
   "scripts": {
     "build": "npm run build:js && npm run build:types",
-    "build:js": "esbuild src/p5.keyed.ts --bundle --format=iife --global-name=p5keyed --target=es2020 --outfile=lib/p5.keyed.js && esbuild src/p5.keyed.ts --bundle --format=iife --global-name=p5keyed --target=es2020 --minify --outfile=lib/p5.keyed.min.js && esbuild src/p5.keyed.ts --bundle --format=esm --target=es2020 --outfile=lib/p5.keyed.esm.js",
-    "build:types": "tsc -p tsconfig.build.json",
-    "watch": "esbuild src/p5.keyed.ts --bundle --format=iife --global-name=p5keyed --target=es2020 --watch --outfile=lib/p5.keyed.js",
+    "build:js": "node build.mjs",
+    "build:types": "tsc -p tsconfig.build.json && node fix-types.mjs",
+    "watch": "node build.mjs --watch",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build"
   },
   "peerDependencies": {
     "p5": "^2.0.0"
@@ -38,5 +43,23 @@
     "p5": "^2.3.4",
     "typescript": "^7.0.2",
     "vitest": "^5.0.3"
+  },
+  "homepage": "https://github.com/domizai/p5.keyed",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/domizai/p5.keyed.git"
+  },
+  "bugs": {
+    "url": "https://github.com/domizai/p5.keyed/issues"
+  },
+  "jsdelivr": "lib/p5.keyed.min.js",
+  "unpkg": "lib/p5.keyed.min.js",
+  "exports": {
+    ".": {
+      "types": "./lib/types/p5.keyed.d.ts",
+      "import": "./lib/p5.keyed.esm.js",
+      "default": "./lib/p5.keyed.js"
+    },
+    "./package.json": "./package.json"
   }
 }

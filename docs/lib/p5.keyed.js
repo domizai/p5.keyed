@@ -1,4 +1,4 @@
-/*! p5.keyed v1.0.0 | LGPL-2.1 | https://github.com/domizai/p5.keyed */
+/*! p5.keyed v1.1.0 | LGPL-2.1 | https://github.com/domizai/p5.keyed */
 "use strict";
 var p5keyed = (() => {
   var __defProp = Object.defineProperty;

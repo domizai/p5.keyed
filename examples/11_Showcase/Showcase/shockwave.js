@@ -1,12 +1,13 @@
+// How long an impact lasts, in seconds.
+const SHOCKWAVE_LIFE = 1.4;
+
 // One impact: a ring and a spray of sparks, on a one-shot timeline of its own.
 class Shockwave extends Composition {
-    static LIFE = 1.4;
-
     constructor(col) {
-        super(Shockwave.LIFE);
+        super(SHOCKWAVE_LIFE);
         this.col = col;
 
-        const d = Shockwave.LIFE;
+        const d = SHOCKWAVE_LIFE;
 
         this.radius = this.add(Keyed.ofFloat()
             .key(Key.at(0).setEasing(Easing.cubicBezier(0.1, 0.9, 0.2, 1)), 10)

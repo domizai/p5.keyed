@@ -1,7 +1,6 @@
 # p5.keyed
 
-Keyframe animation for p5.js. Set a value at a few points in time, and Keyed blends everything in between, with easing, paths, effects and events.
-p5.keyed is the p5.js version of [Keyed for Processing](https://github.com/domizai/Keyed). 
+Keyframe animation for p5.js. Set a value at a few points in time, and p5.keyed blends everything in between, with easing, paths, effects and events. p5.keyed is the p5.js version of [Keyed for Processing](https://github.com/domizai/Keyed). 
 
 👉 [Documentation and Tutorial](https://domizai.github.io/p5.keyed/)
 

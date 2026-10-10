@@ -16,6 +16,7 @@ import {
     VectorLerp,
     ticker,
 } from './core';
+import { binder } from './core/binder';
 import { env, type P5Runtime } from './core/env';
 
 export * from './core';
@@ -46,7 +47,8 @@ export function keyedAddon(p5: unknown, _fn: unknown, lifecycles: Lifecycles): v
     lifecycles.remove = function () {
         if (this === owner) {
             owner = null;
-            // Timelines belong to the sketch that made them; the default one is replaced so the next sketch starts clean.
+            // Timelines and bound targets belong to the sketch that made them; the default timeline is replaced so the next sketch starts clean.
+            binder.clear();
             ticker.clear();
             Keyed.init();
         }

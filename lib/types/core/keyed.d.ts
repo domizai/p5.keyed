@@ -55,6 +55,14 @@ export declare class Keyed<A> {
     static ofString(defaultValue?: string): Keyed<string>;
     /** Animated p5.Vector, (0, 0, 0) while there are no keys. */
     static ofVector(defaultValue?: p5.Vector): Keyed<p5.Vector>;
+    /** The setter receives value() before every draw(), after the timelines have advanced. */
+    static bind<A>(lerp: Lerp<A>, defaultValue: A, setter: (value: A) => void): Keyed<A>;
+    /**
+     * Binds a property by name, e.g. Keyed.bind(ball, 'x'). Its current value becomes the default and picks the type like
+     * Keyed.of(); for integers use Keyed.ofInt().bind(obj, 'count'). Top-level let and const variables are not properties of
+     * window (var is), so bind a setter for those.
+     */
+    static bind<T extends object, K extends keyof T & string>(target: T, property: K): Keyed<T[K]>;
     /**
      * Adds a key at time t, on a pin, or the key itself (adding the same Key again replaces its tween).
      * The value is a copy of what you pass; or a tween, a function of position 0..1, or a TweenAt to follow instead.
@@ -63,6 +71,14 @@ export declare class Keyed<A> {
     key(at: Key | Pin | number, value: A): this;
     key(at: Key | Pin | number, tween: Tween<A>): this;
     key(at: Key | Pin | number, tweenAt: TweenAt<A>): this;
+    /** The setter receives value() before every draw(), after the timelines have advanced; replaces any previous one. */
+    bind(setter: (value: A) => void): this;
+    /** Writes value() to target[property] before every draw(), e.g. keyed.bind(ball, 'count') for an integer. */
+    bind(target: object, property: string): this;
+    /** Stops updating the bound target, which keeps its last value. */
+    unbind(): this;
+    /** Writes value() to the bound target now, e.g. in setup() before the first draw(). */
+    apply(): this;
     /** Removes a key, or every key placed on a pin. */
     removeKey(at: Key | Pin): this;
     /** Removes all keys. */

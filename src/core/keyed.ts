@@ -1,4 +1,5 @@
 import type p5 from 'p5';
+import { binder, propertySetter } from './binder';
 import { env, p5Runtime } from './env';
 import { Key, segmentEasing } from './key';
 import {
@@ -40,6 +41,7 @@ export class Keyed<A> {
     #tm: Timeline | null = null;
     // raw() wrapped by each added effect in order; the outermost wrapper is the final value.
     #output: Tween<A> = (t) => this.#raw(t);
+    #target: ((value: A) => void) | null = null;
 
     /**
      * Call in setup() to start from a fresh default timeline, which every value without its own timeline follows.
@@ -175,6 +177,34 @@ export class Keyed<A> {
         return new Keyed(new VectorLerp(), defaultValue ?? new (p5Runtime().Vector)(0, 0, 0));
     }
 
+    /** The setter receives value() before every draw(), after the timelines have advanced. */
+    static bind<A>(lerp: Lerp<A>, defaultValue: A, setter: (value: A) => void): Keyed<A>;
+    /**
+     * Binds a property by name, e.g. Keyed.bind(ball, 'x'). Its current value becomes the default and picks the type like
+     * Keyed.of(); for integers use Keyed.ofInt().bind(obj, 'count'). Top-level let and const variables are not properties of
+     * window (var is), so bind a setter for those.
+     */
+    static bind<T extends object, K extends keyof T & string>(target: T, property: K): Keyed<T[K]>;
+    static bind(...args: unknown[]): Keyed<any> {
+        if (args.length >= 3) {
+            const [lerp, defaultValue, setter] = args as [Lerp<unknown>, unknown, (value: unknown) => void];
+            return new Keyed(lerp, defaultValue).bind(setter);
+        }
+        const [target, property] = args as [object, string];
+        // Checks that there is something to write to before reading the current value.
+        const setter = propertySetter(target, property);
+        // Keyed<A> is invariant in A, and the type of the property is only known at runtime.
+        let keyed: Keyed<any>;
+        try {
+            keyed = Keyed.of((target as Record<string, any>)[property]);
+        } catch {
+            throw new TypeError(
+                `Property '${property}' can't be bound by name: its value must be a number, string, boolean, p5.Vector, p5.Color or have lerp(b, d). Bind a setter instead.`,
+            );
+        }
+        return keyed.bind(setter);
+    }
+
     /**
      * Adds a key at time t, on a pin, or the key itself (adding the same Key again replaces its tween).
      * The value is a copy of what you pass; or a tween, a function of position 0..1, or a TweenAt to follow instead.
@@ -193,6 +223,35 @@ export class Keyed<A> {
         } else {
             this.#keys.push({ key, tween });
         }
+        return this;
+    }
+
+    /** The setter receives value() before every draw(), after the timelines have advanced; replaces any previous one. */
+    bind(setter: (value: A) => void): this;
+    /** Writes value() to target[property] before every draw(), e.g. keyed.bind(ball, 'count') for an integer. */
+    bind(target: object, property: string): this;
+    bind(a: object | ((value: A) => void), property?: string): this {
+        if (typeof a === 'function') {
+            this.#target = a as (value: A) => void;
+        } else if (property !== undefined) {
+            this.#target = propertySetter<A>(a, property);
+        } else {
+            throw new TypeError('bind() needs a setter function, or an object and the name of its property');
+        }
+        binder.add(this);
+        return this;
+    }
+
+    /** Stops updating the bound target, which keeps its last value. */
+    unbind(): this {
+        this.#target = null;
+        binder.remove(this);
+        return this;
+    }
+
+    /** Writes value() to the bound target now, e.g. in setup() before the first draw(). */
+    apply(): this {
+        this.#target?.(this.value());
         return this;
     }
 

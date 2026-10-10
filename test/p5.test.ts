@@ -1,7 +1,8 @@
 // @vitest-environment happy-dom
 import p5 from 'p5';
 import { beforeAll, describe, expect, it } from 'vitest';
-import { ColorLerp, Keyed, VectorLerp } from '../src/core';
+import { ColorLerp, Keyed, VectorLerp, ticker } from '../src/core';
+import { binder } from '../src/core/binder';
 import { env } from '../src/core/env';
 
 // p5's typings lag behind its runtime, so the constructor and the private color accessor are typed here.
@@ -162,5 +163,26 @@ describe('Keyed.of', () => {
         const v = Keyed.of(new p5.Vector(0, 0)).key(0, new p5.Vector(0, 0)).key(1, new p5.Vector(10, 10));
         expect(v.value(0.5).x).toBe(5);
         expect(v.value(0.5)).toBeInstanceOf(p5.Vector);
+    });
+});
+
+describe('binding p5 types', () => {
+    it('binds a vector property by name and a color through a setter', () => {
+        ticker.clear();
+        binder.clear();
+        Keyed.init();
+        const ball = { pos: new p5.Vector(0, 0), col: red() };
+        Keyed.bind(ball, 'pos').key(0, new p5.Vector(0, 0)).key(1, new p5.Vector(10, 20));
+        Keyed.bind(new ColorLerp(), red(), (c) => (ball.col = c)).key(0, red()).key(1, blue());
+        Keyed.defaultTimeline().to(0.5);
+        ticker.tick();
+        expect([ball.pos.x, ball.pos.y]).toEqual([5, 10]);
+        expect(rgba(ball.col)).toEqual([127.5, 0, 127.5, 1]);
+        // Every frame gets its own objects, so keeping one does not alias the next.
+        const first = ball.pos;
+        ticker.tick();
+        expect(ball.pos).not.toBe(first);
+        ticker.clear();
+        binder.clear();
     });
 });

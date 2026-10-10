@@ -6,6 +6,8 @@ export interface Tickable {
 export declare class Ticker {
     #private;
     add(item: Tickable): void;
+    /** Like add(), but ticked after all regular items, e.g. to write values after the timelines have advanced. */
+    addLate(item: Tickable): void;
     remove(item: Tickable): void;
     clear(): void;
     /** Calls pre() on a copy, so items may add or remove themselves while ticking. */

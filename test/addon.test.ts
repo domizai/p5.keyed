@@ -122,4 +122,42 @@ describe('driving the ticker', () => {
         now.mockRestore();
         ours('remove').call(second);
     });
+
+    it('drops bound targets when the owner is removed', () => {
+        const owner = {};
+        ours('presetup').call(owner);
+        lib.Keyed.init(owner);
+        const setter = vi.fn();
+        lib.Keyed.ofFloat(1).bind(setter);
+        ours('predraw').call(owner);
+        expect(setter).toHaveBeenCalledTimes(1);
+
+        ours('remove').call(owner);
+        const next = {};
+        ours('presetup').call(next);
+        ours('predraw').call(next);
+        expect(setter).toHaveBeenCalledTimes(1);
+
+        // The binder registers itself again with the next binding.
+        const later = vi.fn();
+        lib.Keyed.ofFloat(2).bind(later);
+        ours('predraw').call(next);
+        expect(later).toHaveBeenCalledExactlyOnceWith(2);
+        ours('remove').call(next);
+    });
+});
+
+describe('binding by name in global mode', () => {
+    const w = window as unknown as Record<string, unknown>;
+
+    it('binds var-style globals, which are properties of window', () => {
+        w.bindTestX = 5;
+        const x = lib.Keyed.bind(window as never, 'bindTestX' as never) as unknown as { value(): number };
+        expect(x.value()).toBe(5);
+        delete w.bindTestX;
+    });
+
+    it('explains that let and const variables are not properties of window', () => {
+        expect(() => lib.Keyed.bind(window as never, 'notDeclaredAnywhere' as never)).toThrow(/declare it with var, or bind a setter/);
+    });
 });

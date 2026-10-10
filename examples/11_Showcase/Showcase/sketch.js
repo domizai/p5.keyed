@@ -1,5 +1,5 @@
 /**
- * Drag on the timeline to scrub, SPACE to pause, B to toggle bloom.
+ * Drag on the timeline to scrub, SPACE to pause, B to toggle bloom, W to toggle the warp.
  */
 const D = 12;
 const N = 120;
@@ -38,6 +38,35 @@ void main() {
 }
 `;
 
+// Warps the space like a shockwave: every impact pushes the picture outwards along a ring that
+// travels with the Shockwave's own ring. Each wave is (center x, center y, radius, strength), in pixels.
+const MAX_WARPS = 4;
+const WARP_FRAG = `
+#ifdef GL_ES
+precision mediump float;
+#endif
+uniform sampler2D tex0;
+uniform vec2 canvasSize;
+uniform vec4 waves[${MAX_WARPS}];
+varying vec2 vTexCoord;
+
+void main() {
+    vec2 px = vTexCoord * canvasSize;
+    vec2 offset = vec2(0.0);
+    for (int i = 0; i < ${MAX_WARPS}; i++) {
+        vec4 w = waves[i];
+        if (w.w > 0.0) {
+            vec2 v = px - w.xy;
+            float d = length(v);
+            // A band around the front: pulls the picture in front of it, pushes it behind.
+            float x = (d - w.z) / (40.0 + w.z * 0.18);
+            offset += v / max(d, 0.001) * w.w * x * exp(1.0 - x * x);
+        }
+    }
+    gl_FragColor = texture2D(tex0, (px - offset) / canvasSize);
+}
+`;
+
 const names = ['keyed', 'morph', 'spring', 'orbit'];
 
 let palette;
@@ -45,6 +74,8 @@ let bg;
 let overlay;
 let bloom;
 let bloomOn = true;
+let warp;
+let warpOn = true;
 
 let tm;
 let scene;
@@ -79,6 +110,7 @@ function setup() {
 
     tm = Keyed.init().setDuration(D);
     bloom = createFilterShader(BLOOM_FRAG);
+    warp = createFilterShader(WARP_FRAG);
 
     bg = color(10, 10, 16);
     palette = [
@@ -251,7 +283,12 @@ function draw() {
     blendMode(BLEND);
     gl.enable(gl.DEPTH_TEST);
 
-    // Bloom the scene, but not the HUD drawn after it.
+    // Warp first, so the bloom glows the warped picture. Neither touches the HUD drawn after it.
+    if (warpOn) {
+        warp.setUniform('waves', warpWaves());
+        filter(warp);
+    }
+
     if (bloomOn) {
         bloom.setUniform('threshold', 0.2);
         bloom.setUniform('strength', 1.6);
@@ -266,6 +303,20 @@ function draw() {
     translate(-width / 2, -height / 2);
     image(overlay, 0, 0);
     pop();
+}
+
+// The newest impacts as flat (x, y, radius, strength) groups. Strength 0 switches a slot off.
+function warpWaves() {
+    const data = new Array(MAX_WARPS * 4).fill(0);
+    const active = waves.slice(-MAX_WARPS);
+    active.forEach((w, i) => {
+        // The scene's origin on screen: the canvas center, moved up by the translate(0, -30).
+        data[i * 4] = width / 2;
+        data[i * 4 + 1] = height / 2 - 30;
+        data[i * 4 + 2] = w.warpRadius.value() * zoom;
+        data[i * 4 + 3] = w.warpStrength.value() * 34;
+    });
+    return data;
 }
 
 function drawDust() {
@@ -376,9 +427,9 @@ function drawComet(ac) {
         line(a.x, a.y, a.z, b.x, b.y, b.z);
     }
     const p = tail[0];
-    strokeRgb(ac, 90);
-    strokeWeight(30);
-    point(p.x, p.y, p.z);
+    noStroke();
+    fillRgb(ac, 90);
+    disc(p, 30);
 }
 
 function drawWaves() {
@@ -574,5 +625,7 @@ function keyPressed() {
         tm.play(!tm.isPlaying());
     } else if (key === 'b' || key === 'B') {
         bloomOn = !bloomOn;
+    } else if (key === 'w' || key === 'W') {
+        warpOn = !warpOn;
     }
 }

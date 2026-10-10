@@ -14,7 +14,7 @@ function setup() {
     textSize(14);
 
     // The same path on every run. Click for a new one.
-    randomSeed(4);
+    randomSeed(2);
     loop = createLoop(points);
     spline = new Spline(loop);
 

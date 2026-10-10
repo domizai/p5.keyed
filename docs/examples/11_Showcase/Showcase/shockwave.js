@@ -27,6 +27,16 @@ class Shockwave extends Composition {
         this.flash = this.add(Keyed.ofFloat()
             .key(Key.at(0).setEasing(Easing.CUBIC_OUT), 1)
             .key(0.4, 0));
+
+        // The warp of the space: its front travels slower than the ring, so the bend stays on screen,
+        // and it fades out before the end.
+        this.warpRadius = this.add(Keyed.ofFloat()
+            .key(Key.at(0).setEasing(Easing.CUBIC_OUT), 0)
+            .key(d, 560));
+
+        this.warpStrength = this.add(Keyed.ofFloat()
+            .key(Key.at(0).setEasing(Easing.QUAD_OUT), 1)
+            .key(d, 0));
     }
 
     // Drawn in the scene's space, so the ring lies in the shape's plane.

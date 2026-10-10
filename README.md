@@ -1,5 +1,10 @@
 # p5.keyed
 
+<img src="mkdocs/assets/cover.png" alt="Keyed" width="600"><br>
+
+[![npm version](https://img.shields.io/npm/v/p5.keyed.svg?style=flat-square)](https://npmjs.org/package/p5.keyed)
+[![GitHub license](https://img.shields.io/github/license/domizai/p5.keyed?style=flat-square)](https://github.com/domizai/p5.keyed/blob/main/license.txt)
+
 Keyframe animation for p5.js. Set a value at a few points in time, and p5.keyed blends everything in between, with easing, paths, effects and events. p5.keyed is the p5.js version of [Keyed for Processing](https://github.com/domizai/Keyed). 
 
 👉 [Documentation and Tutorial](https://domizai.github.io/p5.keyed/) <br>

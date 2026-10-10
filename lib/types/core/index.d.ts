@@ -1,3 +1,4 @@
+export { Composition } from './composition';
 export { Easing } from './easing';
 export { Effect, GridSnap, Lag, Orbit, Spring, StopMotion, Wiggle, type TimeEffect, type TimeEffectObject } from './effects';
 export { Key } from './key';

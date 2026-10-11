@@ -1,8 +1,8 @@
 /**
  * Drag on the timeline to scrub, SPACE to pause, B to toggle bloom, W to toggle the warp.
  */
-const D = 12;
-const N = 120;
+const D = 12;  // Duration of the animation in seconds
+const N = 120; // Number of frames in the animation
 
 const BLOOM_FRAG = `
 #ifdef GL_ES
@@ -69,6 +69,12 @@ void main() {
 
 const names = ['keyed', 'morph', 'spring', 'orbit'];
 
+// Phones get no shaders and fewer echoes, trails and dust.
+const MOBILE = isMobile();
+const Q = MOBILE
+    ? { dust: 120, ghosts: 3, moonTrail: 14, cometTail: 18, sparks: 7 }
+    : { dust: 260, ghosts: 6, moonTrail: 30, cometTail: 40, sparks: 14 };
+
 let palette;
 let bg;
 let overlay;
@@ -91,6 +97,7 @@ let zoomKeyed;
 let moons = [];
 let waves = [];
 let dust = [];
+let zoomGraph = [];
 
 // Bound below: Keyed writes it before every draw().
 var zoom = 1;
@@ -110,7 +117,7 @@ function setup() {
 
     tm = Keyed.init().setDuration(D);
     // The bloom takes hundreds of texture samples per pixel, too much for most phone GPUs.
-    if (isMobile()) {
+    if (MOBILE) {
         bloomOn = false;
         warpOn = false;
     } else {
@@ -180,6 +187,13 @@ function setup() {
         .addEffect(new Spring(new FloatLerp(), 2.2, 0.25));
     zoomKeyed.apply();
 
+    // The graph of the zoom never changes, so it's sampled once.
+    zoomGraph = [];
+    for (let x = barX0; x <= barX1; x += 2) {
+        const z = zoomKeyed.value(map(x, barX0, barX1, 0, D));
+        zoomGraph.push([x, map(z, 0.85, 1.25, 586, 552)]);
+    }
+
     // Lag crossfades the hard color cuts...
     accent = Keyed.ofColor();
     for (let i = 0; i < 4; i++) {
@@ -244,7 +258,7 @@ function setup() {
     // Dust around the stage, for parallax once the camera moves.
     randomSeed(3);
     dust = [];
-    for (let i = 0; i < 260; i++) {
+    for (let i = 0; i < Q.dust; i++) {
         dust.push(randomUnitVector3().mult(random(240, 520)));
     }
 }
@@ -328,9 +342,12 @@ function warpWaves() {
 function drawDust() {
     stroke(255, 70);
     strokeWeight(2);
+    // One batch instead of a draw call per point.
+    beginShape(POINTS);
     for (const p of dust) {
-        point(p.x, p.y, p.z);
+        vertex(p.x, p.y, p.z);
     }
+    endShape();
 }
 
 // A polar grid below the shape. Seen flat it's a radar; tilted, a floor.
@@ -352,11 +369,11 @@ function drawFloor() {
 
 function drawCore(ac) {
     // Echoes of the shape a moment ago: ghosting while it wobbles.
-    const ghosts = core.echo(6, 0.045);
+    const ghosts = core.echo(Q.ghosts, 0.045 * 6 / Q.ghosts);
     noFill();
     strokeWeight(1.5);
     for (let i = ghosts.length - 1; i > 0; i--) {
-        strokeRgb(ac, 70 - i * 10);
+        strokeRgb(ac, 70 - i * (60 / Q.ghosts));
         outline(ghosts[i]);
     }
 
@@ -383,8 +400,10 @@ function drawCore(ac) {
     // Two sparks racing around the outline.
     const head = (tm.t() / D) * N * 3;
     for (let k = 0; k < 2; k++) {
-        for (let j = 0; j < 14; j++) {
-            const idx = (((head | 0) - j + k * (N / 2) + N * 4) % N + N) % N;
+        const step = 14 / Q.sparks;
+        for (let n = 0; n < Q.sparks; n++) {
+            const j = n * step;
+            const idx = (((head | 0) - Math.round(j) + k * (N / 2) + N * 4) % N + N) % N;
             const p = s.points[idx];
             stroke(255, 255 - j * 18);
             strokeWeight(9 - j * 0.5);
@@ -395,7 +414,7 @@ function drawCore(ac) {
 
 function drawMoons(ac) {
     for (const moon of moons) {
-        const trail = moon.echo(30, 0.022);
+        const trail = moon.echo(Q.moonTrail, 0.022 * 30 / Q.moonTrail);
         for (let i = trail.length - 1; i > 0; i--) {
             const a = trail[i];
             const b = trail[i - 1];
@@ -424,7 +443,7 @@ function disc(p, diameter) {
 }
 
 function drawComet(ac) {
-    const tail = comet.echo(40, 0.018);
+    const tail = comet.echo(Q.cometTail, 0.018 * 40 / Q.cometTail);
     for (let i = tail.length - 1; i > 0; i--) {
         const a = tail[i];
         const b = tail[i - 1];
@@ -484,9 +503,8 @@ function drawHud(ac) {
     overlay.stroke(red(ac), green(ac), blue(ac), 160);
     overlay.strokeWeight(1.5);
     overlay.beginShape();
-    for (let x = barX0; x <= barX1; x += 2) {
-        const z = zoomKeyed.value(map(x, barX0, barX1, 0, D));
-        overlay.vertex(x, map(z, 0.85, 1.25, 586, 552));
+    for (const [x, y] of zoomGraph) {
+        overlay.vertex(x, y);
     }
     overlay.endShape();
 

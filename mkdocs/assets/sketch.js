@@ -10,9 +10,11 @@
         iframe.src = base + box.dataset.sketch + '/index.html';
         iframe.addEventListener('load', () => {
             try {
-                const body = iframe.contentDocument.body;
-                body.style.margin = '0';
-                body.style.overflow = 'hidden';
+                // The canvas shrinks to fit the frame, so narrow screens see all of it.
+                const style = iframe.contentDocument.createElement('style');
+                style.textContent = 'html, body { margin: 0; overflow: hidden; }'
+                    + ' canvas { display: block; width: 100% !important; height: auto !important; }';
+                iframe.contentDocument.head.append(style);
             } catch (e) {
                 // Opened from file://, where the frame can't be styled.
             }
@@ -36,8 +38,6 @@
         link.textContent = 'open ↗';
         box.append(link);
         observer.observe(box);
-        // On narrow screens the frame is scaled down to fit.
-        new ResizeObserver(() => box.style.setProperty('--sketch-scale', Math.min(1, box.clientWidth / size))).observe(box);
     }
 
     const observer = new IntersectionObserver((entries) => {

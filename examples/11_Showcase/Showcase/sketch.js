@@ -13,7 +13,7 @@ uniform vec2 texelSize;
 uniform float threshold;
 uniform float strength;
 uniform float radius;
-#define NUM 384
+#define NUM 192
 varying vec2 vTexCoord;
 
 vec3 disc(vec2 uv, float r) {
@@ -109,8 +109,14 @@ function setup() {
     overlay.noSmooth();
 
     tm = Keyed.init().setDuration(D);
-    bloom = createFilterShader(BLOOM_FRAG);
-    warp = createFilterShader(WARP_FRAG);
+    // The bloom takes hundreds of texture samples per pixel, too much for most phone GPUs.
+    if (isMobile()) {
+        bloomOn = false;
+        warpOn = false;
+    } else {
+        bloom = createFilterShader(BLOOM_FRAG);
+        warp = createFilterShader(WARP_FRAG);
+    }
 
     bg = color(10, 10, 16);
     palette = [
@@ -623,9 +629,19 @@ function mouseReleased() {
 function keyPressed() {
     if (key === ' ') {
         tm.play(!tm.isPlaying());
-    } else if (key === 'b' || key === 'B') {
+    } else if ((key === 'b' || key === 'B') && bloom) {
         bloomOn = !bloomOn;
-    } else if (key === 'w' || key === 'W') {
+    } else if ((key === 'w' || key === 'W') && warp) {
         warpOn = !warpOn;
     }
+}
+
+function isMobile() {
+    const uaMobile = navigator.userAgentData?.mobile;
+    if (uaMobile !== undefined) {
+        return uaMobile;
+    }
+    return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
+        // iPadOS reports itself as a Mac.
+        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 }
